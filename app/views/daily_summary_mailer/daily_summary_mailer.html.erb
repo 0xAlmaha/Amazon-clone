@@ -1,0 +1,16 @@
+<h1>Here is your daily summary, <%= @admin.name %></h1>
+<h3>Users signed up today</h3>
+<% @users.each do |user| %>
+<p>
+  Name: <%= user.name %>, Email: <%= user.email %>
+</p>
+<br>
+<% end %>
+
+<h3>Items added today</h3>
+<% @items.each do |item| %>
+<p>
+  Title: <%= item.title %>, Price: <%= item.price %>
+</p>
+<br>
+<% end %>
