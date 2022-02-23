@@ -1,8 +1,17 @@
 <p style="color: green"><%= notice %></p>
 
 <%= image_tag(@item.cover, size: "200x200")%>
+
 <%= render @item %>
 
+<%= @item.uploads.each do |upload|%>
+<% if upload.representable?%>
+<%= image_tag upload.representation(resize_to_limit: [200, 200]) %>
+<%= image_tag(upload)%>
+<%end%>
+<%end%>
+
+<%= render @item %>
 <div>
   <%= link_to "Edit this item", edit_item_path(@item) %> |
   <%= link_to "Back to items", items_path %>
