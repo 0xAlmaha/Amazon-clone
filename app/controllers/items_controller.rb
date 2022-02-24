@@ -1,6 +1,15 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[ show edit update destroy ]
 
+
+   #Delete Attachments 
+
+   def delete_attachments
+    @upload = ActiveStorage::Blob.find_signed!(params[:id])
+    @upload.attachments.first.purge
+    redirect_back(fallback_location: items_path)
+  end
+
   # GET /items or /items.json
   def index
     @items = Item.all
@@ -67,12 +76,6 @@ class ItemsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def item_params
       params.require(:item).permit(:name, :price, :cover, uploads: [])
-    end
-
-    def delete_attachments
-      @upload = ActiveStorage::Attachment.find(params[:id])
-      @upload.attachments.first.purge
-      redirect_back(fallback_location: items_path, notice: "Attachment deleted!")
     end
 
 end
