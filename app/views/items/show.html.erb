@@ -1,19 +1,19 @@
 <p style="color: green"><%= notice %></p>
 
 <%= image_tag(@item.cover, size: "200x200")%>
- <%= button_to "Destroy this attachment", delete_attachments_item_url(@item.cover.signed_id),
-    :method => :delete %>
+ <%= button_to "Destroy this attachment", delete_attachments_item_url(@item.cover),
+    method: :delete %>
 
 <%= render @item %>
 
-<%= @item.uploads.each do |upload|%>
+<% @item.uploads.each do |upload|%>
 <% if upload.representable?%>
 <%= image_tag upload.representation(resize_to_limit: [200, 200]) %>
-<%= image_tag (upload)%>
+<% image_tag (upload)%>
 <%end%>
 
- <%= button_to "Destroy this attachment", delete_attachments_item_url(upload.signed_id),
-    :method => :delete %>
+ <%= button_to "Destroy this attachment", delete_attachments_item_url(upload),
+    method: :delete %>
 
 <%end%>
 
