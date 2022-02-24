@@ -5,4 +5,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+
+  resources :items do
+    member do
+      delete :delete_attachments
+    end
+  end
+
 end

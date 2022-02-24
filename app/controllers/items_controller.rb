@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: %i[ show edit update destroy ]
+  before_action :set_item, only: %i[ show edit update destroy delete_attachments ]
 
   # GET /items or /items.json
   def index
@@ -58,6 +58,12 @@ class ItemsController < ApplicationController
     end
   end
 
+  def delete_attachments
+    @upload = ActiveStorage::Blob.find_signed(params[:id])
+    @upload.attachments.first.purge
+    redirect_back(fallback_location: items_path)
+end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_item
@@ -68,4 +74,6 @@ class ItemsController < ApplicationController
     def item_params
       params.require(:item).permit(:name, :price, :cover, uploads: [])
     end
+
+
 end
